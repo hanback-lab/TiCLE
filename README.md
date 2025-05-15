@@ -8,6 +8,12 @@ TiCLE은 캡스톤 디자인을 위한 장비입니다.
 
 <br>
 
+## Document
+
+다음 링크에서 TiCLE 매뉴얼을 확인할 수 있습니다.
+
+https://github.com/hanback-lab/TiCLE/wiki
+
 ---
 
 Copyright 2025. Hanback Electronics CO. LTD.
