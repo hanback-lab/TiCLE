@@ -12,10 +12,11 @@ import ticle
 from wifi import Wifi
 from umqtt.robust2 import MQTTClient
 import time
+from bt_ex import BtAudioAmp
 
 #-----------------------------------------------------------
 # TiCLE Wi-Fi를 인터넷이 가능한 AP에 연결합니다.
-ip = Wifi.connect_ap("", "")  # AP 이름과, 비밀번호를 변경해 주세요.
+ip = Wifi.connect_ap("HBE_RSP", "hanback91!")  # AP 이름과, 비밀번호를 변경해 주세요.
 if ip:
     print(f"IP is {ip}")
 else:
@@ -45,6 +46,14 @@ global command
 command = None
 global option
 option = None
+global do_act
+do_act = False
+
+# Bt audio
+global bt
+bt = BtAudioAmp(mode=22, scan=26, down=27, up=28)
+global is_play
+is_play = False
 
 #-----------------------------------------------------------
 # 구독한 토픽이 수신될 때 호출될 콜백 함수 정의
@@ -55,37 +64,30 @@ def on_message(topic, msg, retained, duplicate):
 
     global command
     global option
+    global do_act
 
     if topic == TOPIC_IOT_ACTION_LIGHT:
         command = "light"
         option = int(msg)
+        do_act = True
     elif topic == TOPIC_IOT_ACTION_MOVING:
         command = "moving"
         option = int(msg)
+        do_act = True
     elif topic == TOPIC_IOT_ACTION_AUDIO:
-        if msg == 'up':
-            pass
-        elif msg == 'down':
-            pass
-        elif msg == 'prev':
-            pass
-        elif msg == 'next':
-            pass
+        command = "audio"
+        option = msg
+        do_act = True
     else:
         print(f">>>UNKNOWN<< topic: {topic}, message: {msg}")
 
 #-----------------------------------------------------------
-# 주변장치 제어 코드
-global servo_angle
-servo_angle = 0
-global servo_oppset
-servo_oppset = 1
-
 def act():
     global command
     global option
-    global servo_angle
-    global servo_oppset
+    global bt
+    global is_play
+    
     if command is not None:
         if command == "light":
             if option <= 100:
@@ -93,6 +95,25 @@ def act():
                 pl.on(list([val]*3))
         elif command == "moving":
             servo.angle(option)
+        elif command == "audio":
+            if option == "up":
+                bt.up()
+            elif option == "down":
+                bt.down()
+            elif option == "prev":
+                if is_play:
+                    bt.prev()
+            elif option == "next":
+                if is_play:
+                    bt.next()
+            elif option == "pause":
+                if is_play:
+                    bt.pause_resume()
+                    is_play = False
+            elif option == "resume":
+                if not is_play:
+                    bt.pause_resume()
+                    is_play = True
 
 #-----------------------------------------------------------
 # 아두이노와 같운 프로세싱 구조 사용
@@ -105,11 +126,14 @@ def setup():
     cmqtt.subscribe(TOPIC_IOT_ACTION)
 
 # 프로그램이 반복적으로 수행할 작업 정의 (주기 검사를 통해 주기 시간 단위로 수행)
-def loop():           
+def loop():
+    global do_act           
     if interval_20: # MQTT 서버로부터 토픽 메시지 수신 처리
         cmqtt.check_msg()
-        act()
-             
+        if do_act:
+            act()
+            do_act = False
+                         
     if interval_1000():
         cmqtt.ping()  # MQTT 서버와의 연결 유지
 
