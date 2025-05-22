@@ -12,7 +12,7 @@ import ticle
 from wifi import Wifi
 from umqtt.robust2 import MQTTClient
 import time
-from bt_ex import BtAudioAmp
+from btaudioamp import BtAudioAmp
 
 #-----------------------------------------------------------
 # TiCLE Wi-Fi를 인터넷이 가능한 AP에 연결합니다.
