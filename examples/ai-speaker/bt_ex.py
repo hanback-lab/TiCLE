@@ -1,6 +1,6 @@
 from btaudioamp import BtAudioAmp
 
-bt = BtAudioAmp(mode=6, scan=7, down=27, up=11)
+bt = BtAudioAmp(mode=22, scan=26, down=27, up=28)
 is_play = True
 
 msg = """Bluetooth Audio Amplifier Control

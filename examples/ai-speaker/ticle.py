@@ -53,7 +53,7 @@ do_act = False
 global bt
 bt = BtAudioAmp(mode=22, scan=26, down=27, up=28)
 global is_play
-is_play = False
+is_play = True 
 
 #-----------------------------------------------------------
 # 구독한 토픽이 수신될 때 호출될 콜백 함수 정의
