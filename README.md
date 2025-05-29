@@ -1,6 +1,6 @@
 # TiCLE
 
-![product](pictures/product_left.png)
+![product](pictures/product_topview.png)
 
 TiCLE은 캡스톤 디자인을 위한 장비입니다. 
 
