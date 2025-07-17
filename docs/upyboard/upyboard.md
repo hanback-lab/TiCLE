@@ -109,6 +109,8 @@ upy ls lib
 
 </details>
 
+---
+
 ### Hello World!
 
 다음은 micropython 프로그램을 작성하고 Pico에 업로드하는 실습입니다. 
@@ -249,6 +251,86 @@ print("hello world!")
 ![run_ex](res/run_ex.png)
 </details>
 
+### df
+> 보드 저장소의 현재 용량을 확인합니다.
+
+```
+upy df
+```
+
+<details>
+<summary>사용 예시</summary>
+
+실행 결과
+
+![df_ex](res/df_ex.png)
+
+</details>
+
+### ls
+
+> 보드 저장소의 현재 경로에 있는 모든 폴더/파일들을 출력합니다.
+
+인자값으로 특정 경로를 입력하면 해당 경로의 모든 폴더/파일들을 출력합니다. 입력하지 않는다면 최상위 경로 ('/') 를 출력합니다.
+
+```sh
+upy ls
+
+# Specific path
+upy ls path
+```
+
+<details>
+<summary>사용 예시</summary>
+
+실행 결과
+
+```sh
+upy ls
+```
+
+![ls_ex](res/ls_ex.png)
+
+```sh 
+# 보드에 탑재된 칩 종류에 따라 달라질 수 있음.
+upy ls lib
+```
+
+![ls_lib_ex](res/ls_lib_ex.png)
+
+</details>
+
+### mkdir
+
+> 보드 저장소 내에 폴더를 생성합니다.
+
+특정 파일들을 정리 및 분류하는데 용이하게 사용할 수 있습니다.
+
+인자값으로 생성할 폴더의 경로를 기입해주면 됩니다.
+
+```sh
+upy mkdir <path>
+```
+
+<details>
+<summary>사용 예시</summary>
+실행 결과
+
+```sh
+upy mkdir test
+```
+
+![mkdir_ex](res/mkdir_ex.png)
+
+생성 확인
+
+```sh
+upy ls
+```
+
+![mkdir_ls_ex](res/mkdir_ls_ex.png)
+</details>
+
 ### put
 > 파일을 보드 저장소에 저장시킵니다.
 
@@ -372,113 +454,6 @@ upy upload test.py temp.mpy
 ![upload_ex](res/upload_ex.png)
 </details> 
 
-### df
-> 보드 저장소의 현재 용량을 확인합니다.
-
-```
-upy df
-```
-
-<details>
-<summary>사용 예시</summary>
-
-실행 결과
-
-![df_ex](res/df_ex.png)
-
-</details>
-
-### ls
-
-> 보드 저장소의 현재 경로에 있는 모든 폴더/파일들을 출력합니다.
-
-인자값으로 특정 경로를 입력하면 해당 경로의 모든 폴더/파일들을 출력합니다. 입력하지 않는다면 최상위 경로 ('/') 를 출력합니다.
-
-```sh
-upy ls
-
-# Specific path
-upy ls path
-```
-
-<details>
-<summary>사용 예시</summary>
-
-실행 결과
-
-```sh
-upy ls
-```
-
-![ls_ex](res/ls_ex.png)
-
-```sh 
-# 보드에 탑재된 칩 종류에 따라 달라질 수 있음.
-upy ls lib
-```
-
-![ls_lib_ex](res/ls_lib_ex.png)
-
-</details>
-
-
-### format
-> 보드 저장소을 초기화합니다.
-
-보드 저장소에 있던 파일들을 전부 삭제합니다. 저장소를 깔끔하게 정리하고 싶을 때 유용하게 사용할 수 있습니다.
-
-```sh
-upy format
-```
-
-<details>
-<summary>사용 예시</summary>
-
-실행 결과
-
-![format_ex](res/format_ex.png)
-
-(+) format 후 파일시스템 확인
-
-```sh
-upy ls
-```
-
-![format_ls_ex](res/format_ls_ex.png)
-
-</details>
-
-### mkdir
-
-> 보드 저장소 내에 폴더를 생성합니다.
-
-특정 파일들을 정리 및 분류하는데 용이하게 사용할 수 있습니다.
-
-인자값으로 생성할 폴더의 경로를 기입해주면 됩니다.
-
-```sh
-upy mkdir <path>
-```
-
-<details>
-<summary>사용 예시</summary>
-실행 결과
-
-```sh
-upy mkdir test
-```
-
-![mkdir_ex](res/mkdir_ex.png)
-
-생성 확인
-
-```sh
-upy ls
-```
-
-![mkdir_ls_ex](res/mkdir_ls_ex.png)
-</details>
-
 ### rm
 
 > 보드 저장소 내의 특정 폴더 및 파일을 삭제합니다.
@@ -522,6 +497,32 @@ upy ls
 ```
 
 ![rm_ls_ex](res/format_ls_ex.png)
+</details>
+
+### format
+> 보드 저장소을 초기화합니다.
+
+보드 저장소에 있던 파일들을 전부 삭제합니다. 저장소를 깔끔하게 정리하고 싶을 때 유용하게 사용할 수 있습니다.
+
+```sh
+upy format
+```
+
+<details>
+<summary>사용 예시</summary>
+
+실행 결과
+
+![format_ex](res/format_ex.png)
+
+(+) format 후 파일시스템 확인
+
+```sh
+upy ls
+```
+
+![format_ls_ex](res/format_ls_ex.png)
+
 </details>
 
 ### reset 
