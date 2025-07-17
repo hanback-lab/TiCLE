@@ -258,7 +258,7 @@ print("hello world!")
 
 사용자 환경에서 작성된 Micropython 프로그램을 칩의 파일시스템에 저장시킵니다. 단순 파일 저장을 넘어 사용자 지정 라이브러리 등록, boot 및 main 프로그램도 등록할 수 있어 칩의 활용도를 높여줄 수 있습니다.
 
-인자값을 총 두 개까지 입력할 수 있습니다
+인자값을 총 두 개까지 입력할 수 있습니다.
 - 첫 번째 인자 : 저장할 파일 이름
 - 두 번째 인자 (선택) : 칩에 저장할 때 붙여질 새로운 이름
 
@@ -338,7 +338,7 @@ upy get test.py
 
 Micropython 파일을 바이트코드 파일로 변환시켜 칩에 저장시키는 기능입니다. 경량화 및 은닉화 등의 목적으로 활용될 수 있습니다. 
 
-인자값을 총 두 개까지 입력할 수 있습니다
+인자값을 총 두 개까지 입력할 수 있습니다.
 - 첫 번째 인자 : 저장할 파일 이름
 - 두 번째 인자 (선택) : 칩에 저장할 때 붙여질 새로운 이름
 
@@ -408,3 +408,232 @@ upy ls
 upy ls path
 ```
 
+<details>
+<summary>사용 예시</summary>
+
+실행 결과
+
+```sh
+upy ls
+```
+
+![ls_ex](res/ls_ex.png)
+
+```sh 
+# 칩 종류에 따라 달라질 수 있음.
+upy ls lib
+```
+
+![ls_lib_ex](res/ls_lib_ex.png)
+
+</details>
+
+
+#### format
+> 칩 파일시스템을 초기화합니다.
+
+칩 저장공간에 있던 파일들을 전부 삭제합니다. `init` 명령어와 유사하지만 별다른 라이브러리 설치 과정은 진행하지 않습니다.
+
+```sh
+upy format
+```
+
+<details>
+<summary>사용 예시</summary>
+
+실행 결과
+
+![format_ex](res/format_ex.png)
+
+(+) format 후 파일시스템 확인
+
+```sh
+upy ls
+```
+
+![format_ls_ex](res/format_ls_ex.png)
+
+</details>
+
+#### mkdir
+
+> 칩 파일시스템 내에 폴더를 생성합니다.
+
+특정 파일들을 정리 및 분류하는데 용이하게 사용할 수 있습니다.
+
+인자값으로 생성할 폴더의 경로를 기입해주면 됩니다.
+
+```sh
+upy mkdir <path>
+```
+
+<details>
+<summary>사용 예시</summary>
+실행 결과
+
+```sh
+upy mkdir test
+```
+
+![mkdir_ex](res/mkdir_ex.png)
+
+생성 확인
+
+```sh
+upy ls
+```
+
+![mkdir_ls_ex](res/mkdir_ls_ex.png)
+</details>
+
+#### rm
+
+> 칩 파일시스템 내의 특정 폴더 및 파일을 삭제합니다.
+
+인자값으로 삭제할 파일 및 폴더, 혹은 경로를 입력합니다.
+
+```sh
+upy rm <path>
+```
+
+<details>
+<summary>사용 예시</summary>
+테스트 폴더 생성
+
+```sh
+upy mkdir test
+```
+
+![mkdir_ex](res/mkdir_ex.png)
+
+생성 확인
+
+```sh
+upy ls
+```
+
+![mkdir_ls_ex](res/mkdir_ls_ex.png)
+
+테스트 폴더 삭제
+
+```sh
+upy rm test
+```
+
+![rm_ex](res/rm_ex.png)
+
+삭제 확인
+
+```sh
+upy ls
+```
+
+![rm_ls_ex](res/format_ls_ex.png)
+</details>
+
+### Chip Control
+#### reset 
+
+> 보드를 Soft reset 시킵니다.
+
+해당 기능은 보드의 Micropython 인터프리터를 초기화시키는 기능입니다. 즉, RAM에 적재된 Python 코드 및 변수, 모듈 등을 초기화시킵니다.   
+Reset 시 보드는 자동으로 boot.py -> main.py 프로그램을 순차적으로 실행하는데, 이 시퀀스를 이용하여 칩에 main.py 프로그램을 넣고, 보드에 전원이 공급 & 리셋을 걸어줄 시 자동으로 해당 프로그램을 실행시키게끔 하는 등의 동작을 수행시킬 수 있습니다.
+
+```sh
+upy reset
+```
+
+<details>
+<summary>사용 예시</summary>
+
+**main.py 파일 생성 및 아래 내용 기재**
+
+```py
+import machine
+import time
+
+led = machine.Pin("LED", machine.Pin.OUT)
+while True:
+    led.toggle()
+    time.sleep_ms(1000)
+```
+
+upy reset 후 보드에 장착된 LED가 1초씩 점멸하는 지 확인
+
+```sh
+upy reset
+```
+
+![reset_ex](res/reset_ex.png)
+
+![reset_ex_res](res/reset_ex.gif)
+
+</details>
+
+#### repl
+
+> 보드의 MicroPython REPL에 접속합니다.
+
+REPL(Read Eval Pring Loop)이란 명령어 한 줄씩 입력받아 실행하고 그 결과를 즉시 출력해주는 대화형 인터프리터 환경입니다.
+
+REPL은 대화형 실행 환경으로써 단순한 코드는 그 결과값을 즉시 확인해볼 수 있다는 특징을 가지고 있습니다. 이를 활용해 센서 값을 실시간으로 읽어보거나 특정 함수 및 라이브러리의 동작을 테스트해볼 수 있는 등 디버깅 및 실험에 있어서 아주 용이하게 쓰일 수 있는 기능입니다.
+
+또한, Soft Reset 등의 단축키 기능이 담겨 있어 보드 저장소 및 전체 제어를 할 수 있습니다.
+
+REPL에 접속하면 직전까지 실행되고 있던 프로그램은 자동으로 종료됩니다.
+
+```sh
+upy repl
+```
+
+<details>
+<summary>사용 예시</summary>
+
+repl을 열고 단순 연산값을 출력해봅니다.
+
+```sh
+upy repl
+>>> print(1+2)
+```
+
+실행 결과
+
+![repl_ex](res/repl_ex.png)
+
+REPL에서 Soft Reset을 걸어 `reset` 과정에서 넣었던 `main.py` 프로그램을 실행시켜봅니다.
+
+```sh
+>>> <Ctrl+D>
+```
+
+실행 결과
+
+![repl_softreset_ex](res/repl_softreset_ex.png)
+
+LED에 불이 점멸하는 것을 확인할 수 있습니다.
+
+</details>
+
+#### shell
+
+> 보드의 저장소 관리를 Shell 형태로 수행합니다.
+
+지금까지 나왔던 저장소 관리 명령어들(ls, get, put 등) 및 자주 사용하는 명령어들을 Shell 환경에서 사용할 수 있습니다. Linux 및 Windows의 명령 프롬프트처럼 CLI 환경에서 파일을 관리하고 repl에 접속할 수 있는 등 명령어 기반 인터페이스를 사용할 수 있습니다.
+
+```sh
+upy shell
+```
+
+사용할 수 있는 명령어는 다음과 같습니다.
+
+- clear : 화면 정리
+- [ls](#ls)
+- cd : 특정 경로 이동
+- [get](#get)
+- [put](#put)
+- [rm](#rm)
+- [mkdir](#mkdir)
+- [df](#df)
+- [repl](#repl)
+- pwd : 현재 경로 출력
+- help : shell 상에서 사용할 수 있는 명령어 출력
