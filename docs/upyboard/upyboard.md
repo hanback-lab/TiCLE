@@ -35,7 +35,7 @@ pip install upyboard
 
 ## Quick Start
 
-이 목차에서는 upyboard를 활용한 간단한 예시로 개발환경을 구축하고 간단한 프로그램을 실행시켜보는 실습을 진행해 보겠습니다.   
+이 목차에서는 upyboard를 활용한 간단한 예시로 개발환경을 구축하고 간단한 프로그램을 실행시켜보는 실습을 진행해 봅니다.   
 
 이 실습을 진행하기 위해 다음 준비 사항이 필요합니다.
 - Visual Studio Code (이하 VSCode)
@@ -169,11 +169,12 @@ upy scan
 ### env
 > 실행 시 현재 경로를 사용자 환경으로 등록하고 구성합니다.
 
-현재 경로에 .vscode 폴더를 생성합니다. 이 폴더는 보드와 연결된 포트 정보를 저장하며 프로그램 실행 시 포트 정보를 일일이 기입하지 않아도 자동으로 불러와 실행되게끔 설정해줍니다. 또한  VSCode의 Intellicode 및 Python extenstion에 관련 정보를 등록하여 VSCode에서도 Micropython 개발을 편리하게 할 수 있도록 구성해줍니다.
+현재 사용자 경로에 .vscode 폴더를 생성합니다. 이 폴더는 보드와 연결된 포트 정보를 저장하여 프로그램 실행 시 포트 정보를 일일이 기입하지 않아도 자동으로 불러와 실행되게끔 설정해줍니다. 또한  VSCode의 Intellicode 및 Python extenstion에 Micropython 정보를 설정하여 VSCode에서도 Micropython 개발을 편리하게 할 수 있도록 구성해줍니다.
 
-환경 등록은 해당되는 경로에 최초 1회만 실행하면 됩니다. 또한, 초기 상태에는 등록된 포트 정보가 없기에 '-s' 옵션을 사용하여 포트 정보를 명시해줍니다.
+대부분의 upyboard 명령어는 사용자 환경이 upyboard 프로그램에 등록 되어 있어야 원활히 동작하며, 이는 `env` 명령어를 통해 진행할 수 있습니다. 만약 등록 되지 않은 경우 기능 사용에 제한이 있지만, `-s` 옵션과 포트를 붙여주어 일시적으로 기능을 활용할 수 있습니다.
 
-대부분의 upyboard 명령어는 사용자 환경이 upyboard 프로그램에 등록 되어 있어야 원활히 동작하며, 이는 `env` 명령어를 통해 진행할 수 있습니다. 만약 등록 되지 않은 경우 기능 사용에 제약이 되지만, `-s` 옵션을 붙여주어 일시적으로 기능을 활용할 수 있습니다.
+환경 등록은 해당되는 사용자 경로에 최초 1회만 실행하면 됩니다. 또한, 초기 상태에는 등록된 포트 정보가 없기에 '-s' 옵션을 사용하여 포트 정보를 명시해줍니다. 보드와 연결된 포트는 [scan](#scan) 명령어를 통해 확인할 수 있습니다.
+
 
 ```
 upy -s <COM Port> env
@@ -181,16 +182,21 @@ upy -s <COM Port> env
 
 <details>
 <summary>사용 예시</summary>
+<br>
 
-실행 결과
+먼저 `scan` 명령어를 활용해 연결된 포트를 파악합니다. 
 
-![run_ex](res/env_ex.png)
+![scan_ex](res/scan_ex.png)
+
+'COM5' 포트를 사용자 환경에 등록시킵니다.
+
+![env_ex](res/env_ex.png)
 </details>
 
 ### init
 > 보드를 초기화시킵니다.
 
-보드 저장소의 저장된 파일들을 모두 삭제한 후, 라이브러리들을 설치하여 공장 초기화 상태로 만들어줍니다.
+보드 저장소의 저장된 파일들을 모두 삭제한 후, 라이브러리들을 설치하여 공장 초기화합니다. 이 때, 연결된 보드를 자동으로 감지하여 각각에 해당하는 초기화 과정을 수행합니다.
 
 ```sh
 upy init
@@ -198,34 +204,61 @@ upy init
 
 <details>
 <summary>사용 예시</summary>
+<br>
 
-실행 결과
+TiCLE 보드를 공장 초기화합니다.
 
 ![init_ex](res/init_ex.png)
 </details>
 
 ### sport
 
-> 사용자 환경 설정에 등록된 포트 정보를 변경합니다.
+> 사용자 환경에 등록된 포트 정보를 변경합니다.
 
-같은 사용자 환경에서 보드만 달라질 경우, 연결된 포트 정보가 달라질 수 있습니다. 이에 이 명령어를 사용하여 포트 정보를 변경 후 기존과 동일하게 사용할 수 있습니다.
+같은 사용자 환경에서 보드만 달라질 경우, 연결된 포트 정보가 달라질 수 있습니다. 이에 이 명령어를 사용하여 포트 정보를 변경해 기존과 동일하게 사용할 수 있습니다.
 
-단, `env` 명령어로 사용자 환경이 등록된 경로에서만 동작합니다.
+단, `env` 명령어로 사용자 환경이 등록된 경로에서만 명령어가 동작됩니다.
 
-인자값으로 변경할 포트를 입력합니다.
+인자값으로 변경할 포트를 입력합니다. 만약 인자값으로 아무것도 입력하지 않을시, 현재 사용자 환경에 설정된 포트 정보를 출력합니다.
 
-```
+```sh
+# Display port information
+upy sport
+
+# Change port
 upy sport <COM PORT>
 ```
 
 <details>
 <summary>사용 예시</summary>
 
-기존 포트에서 'COM5'로 포트 변경 진행.
+<br>
+보드 변경 전
 
-실행 결과
+![scan_ex](res/scan_ex.png)
+
+![sport_current_ex](res/sport_current_ex.png)
+
+보드 변경 후 scan 시 'COM29' 표시됨
+
+![sport_scan_ex](res/sport_scan_ex.png)
+
+sport 명령어를 사용해 포트 변경
+
+```sh
+upy sport COM29
+```
 
 ![sport_ex](res/sport_ex.png)
+
+포트 변경 확인
+
+```sh
+upy sport
+```
+
+![sport_change_ex](res/sport_change_ex.png)
+
 </details>
 
 ### run
@@ -233,20 +266,29 @@ upy sport <COM PORT>
 
 이 명령어는 사용자가 작성한 Micropython 프로그램을 보드에 설치된 인터프리터를 사용하여 프로그램을 동작시킨다는 것이 가장 큰 특징입니다. 사용자 환경과 보드의 환경을 분할시켜 주어 독립적으로 동작시킴과 동시에 즉시 프로그램을 실행시키기 용이합니다.
 
+인자값으로 실행할 파일 이름을 입력합니다.
+
 ```sh
 upy run <File name>.py
 ```
 
 <details>
 <summary>사용 예시</summary>
+<br>
 
-'hello_world.py' 파일 생성 후 다음과 같이 입력 및 저장
+사용자 환경에서 'hello_world.py' 파일 생성 후 다음과 같이 입력 및 저장
 
 ```python
 print("hello world!")
 ```
 
-실행 결과
+![run_file_ex](res/run_file_ex.png)
+
+다음 명령어로 프로그램 실행 후 결과 확인
+
+```sh
+upy run hello_world.py
+```
 
 ![run_ex](res/run_ex.png)
 </details>
@@ -277,12 +319,12 @@ upy df
 upy ls
 
 # Specific path
-upy ls path
+upy ls <path>
 ```
 
 <details>
 <summary>사용 예시</summary>
-
+<br>
 실행 결과
 
 ```sh
@@ -291,17 +333,17 @@ upy ls
 
 ![ls_ex](res/ls_ex.png)
 
+\<TiCLE 전용\> library 폴더 내 파일 목록 출력
+
 ```sh 
 # 보드에 탑재된 칩 종류에 따라 달라질 수 있음.
 upy ls lib
 ```
 
 ![ls_lib_ex](res/ls_lib_ex.png)
-
 </details>
 
 ### mkdir
-
 > 보드 저장소 내에 폴더를 생성합니다.
 
 특정 파일들을 정리 및 분류하는데 용이하게 사용할 수 있습니다.
@@ -334,44 +376,61 @@ upy ls
 ### put
 > 파일을 보드 저장소에 저장시킵니다.
 
-사용자 환경에서 작성된 Micropython 프로그램을 보드 저장소에 저장시킵니다. 단순 파일 저장을 넘어 사용자 지정 라이브러리 등록, boot 및 main 프로그램도 등록할 수 있어 보드의 활용도를 높여줄 수 있습니다.
+사용자 환경에서 작성된 Micropython 프로그램을 보드 저장소에 저장시킵니다. 단순 파일 저장을 넘어 사용자 지정 라이브러리 저장, boot 및 main 프로그램도 등록할 수 있어 보드의 활용도를 높여줄 수 있습니다.
 
 인자값을 총 두 개까지 입력할 수 있습니다.
 - 첫 번째 인자 : 저장할 파일 이름
-- 두 번째 인자 (선택) : 보드에 저장할 때 붙여질 새로운 이름
+- 두 번째 인자 (선택) : 보드에 저장할 때 붙여질 새로운 이름 및 저장할 경로
 
 ```sh
 # Use original file name
-upy put <file name>.py
+upy put <file name>
 
 # Attach new name
-upy put <file name>.py <new name>.py
+upy put <file name> <new name or path>
 ```
 
 <details>
 <summary>사용 예시</summary>
+<br>
 
-사용자 환경에서 'test.py' 파일 생성 후 다음과 같이 입력 및 저장
-
-```python
-print("hello world!")
-```
-
-다음 명령어를 통해 보드에 파일 저장
+[run](#run) 예시에서 생성한 'hello_world.py' 을 다음 명령어를 통해 보드 저장소에 파일 저장
 
 ```sh
-upy put test.py
+upy put hello_world.py
 ```
-
-만약, 새로운 이름 (예시 : temp)로 저장할 시 다음과 같이 입력
-
-```sh
-upy put test.py temp.py
-```
-
-실행 결과
-
 ![put_ex](res/put_ex.png)
+
+만약, 새로운 이름 (예시 : temp.py)로 저장할 시 다음과 같이 입력
+
+```sh
+upy put hello_world.py temp.py
+```
+
+![put_temp_ex](res/put_other_name.png)
+
+`ls` 명령어로 파일 저장 확인
+
+```sh
+upy ls
+```
+
+![put_ls](res/put_ls.png)
+
+[mkdir](#mkdir) 예시에서 제작한 test 폴더 안에 'hello_world.py' 파일을 'hello.py' 이름으로 저장
+
+```sh
+upy put hello_world.py test/hello.py
+```
+![put_in_test](res/put_in_test.png)
+
+`ls` 명령어로 파일 저장 확인
+
+```sh
+upy ls test
+```
+
+![put_ls_test](res/put_ls_test.png)
 </details> 
 
 ### get
@@ -379,36 +438,42 @@ upy put test.py temp.py
 
 보드에 저장된 파일 내용을 읽고 터미널에 출력합니다. 보드 저장소 내에 저장된 파일의 원본이 소실되었거나 다른 작업자와 협업할 때 등 활용할 수 있습니다.
 
-인자값으로 보드 내에서 불러올 파일 이름을 입력합니다.
-
+인자값을 총 두 개까지 입력할 수 있습니다.
+- 첫 번째 인자 : 보드 저장소에서 불러올 경로
+- 두 번째 인자 (선택) : 보드 저장소에서 특정 파일을 불러온 후 사용자 환경에 저장될 파일 이름 또는 경로
 ```sh
-upy get <file name>
+# Display file content on terminal
+upy get <path>
+
+# Load and save a file from the board with a specified name or path
+upy get <path> <new name or path>
 ```
 
 <details>
 <summary>사용 예시</summary>
+<br>
+불러올 파일 확인
 
-사용자 환경에서 'test.py' 파일 생성 후 다음과 같이 입력 및 저장
+![check_the_file](res/put_ls.png)
 
-```python
-print("hello world!")
-```
-
-다음 명령어를 통해 보드 저장소에 파일 저장
+get 명령어를 통해 파일 내용을 터미널에 출력
 
 ```sh
-upy put test.py
+upy get hello_world.py
 ```
-
-get 명령어를 통해 파일 내용 확인
-
-```sh
-upy get test.py
-```
-
-실행 결과
-
 ![get_ex](res/get_ex.png)
+
+보드에 test 폴더 아래에 있는 'hello.py' 파일을 사용자 환경에 'hi.py'로 저장
+
+![check_the_test](res/put_ls_test.png)
+
+```sh
+upy get test/hello.py hi.py
+```
+
+![get_test_hi](res/get_test_hi.png)
+
+![check_get_the_file](res/get_the_file.png)
 </details> 
 
 ### upload
@@ -418,40 +483,58 @@ Micropython 파일을 바이트코드 파일로 변환시켜 보드 저장소에
 
 인자값을 총 두 개까지 입력할 수 있습니다.
 - 첫 번째 인자 : 저장할 파일 이름
-- 두 번째 인자 (선택) : 보드 저장소에 저장할 때 붙여질 새로운 이름
+- 두 번째 인자 (선택) : 보드 저장소에 저장할 때 붙여질 새로운 이름 및 경로
 
 ```sh
 # Use original file name
 upy upload <file name>.py
 
-# Attach new name
-upy upload <file name>.py <new name>.mpy
+# Attach new name or path
+upy upload <file name>.py <new_name or path>
 ```
 
 <details>
 <summary>사용 예시</summary>
+<br>
 
-사용자 환경에서 'test.py' 파일 생성 후 다음과 같이 입력 및 저장
-
-```python
-print("hello world!")
-```
-
-다음 명령어를 통해 보드 저장소에 컴파일된 파일 저장
+[run](#run) 예시에서 생성한 'hello_world.py' 을 다음 명령어를 통해 보드 저장소에 파일을 컴파일한 후 저장
 
 ```sh
-upy upload test.py
+upy upload hello_world.py
 ```
-
-만약, 새로운 이름 (예시 : temp)로 저장할 시 다음과 같이 입력
-
-```sh
-upy upload test.py temp.mpy
-```
-
-실행 결과
 
 ![upload_ex](res/upload_ex.png)
+
+만약, 새로운 이름 (예시 : temp.mpy)로 저장할 시 다음과 같이 입력
+
+```sh
+upy upload hello_world.py temp.mpy
+```
+
+![upload_temp_ex](res/upload_temp.png)
+
+`ls` 명령어로 파일 저장 확인
+
+```sh
+upy ls
+```
+
+![upload_ls](res/upload_ls.png)
+
+[mkdir](#mkdir) 예시에서 제작한 test 폴더 안에 'hello_world.py' 파일을 'hello.mpy' 이름으로 저장
+
+```sh
+upy upload hello_world.py test/hello.mpy
+```
+![upload_in_test](res/upload_in_test.png)
+
+`ls` 명령어로 파일 저장 확인
+
+```sh
+upy ls test
+```
+
+![upload_ls_test](res/upload_ls_test.png)
 </details> 
 
 ### rm
@@ -466,26 +549,11 @@ upy rm <path>
 
 <details>
 <summary>사용 예시</summary>
-테스트 폴더 생성
+
+[put](#put) 예시에서 저장한 'temp.py' 파일 삭제
 
 ```sh
-upy mkdir test
-```
-
-![mkdir_ex](res/mkdir_ex.png)
-
-생성 확인
-
-```sh
-upy ls
-```
-
-![mkdir_ls_ex](res/mkdir_ls_ex.png)
-
-테스트 폴더 삭제
-
-```sh
-upy rm test
+upy rm temp.py
 ```
 
 ![rm_ex](res/rm_ex.png)
@@ -496,7 +564,24 @@ upy rm test
 upy ls
 ```
 
-![rm_ls_ex](res/format_ls_ex.png)
+![rm_ls_ex](res/rm_ls_ex.png)
+
+[upload](#upload) 예시에서 저장한 'test/hello.mpy' 파일 삭제
+
+```sh
+upy rm test/hello.mpy
+```
+
+![rm_mpy_ex](res/rm_mpy_ex.png)
+
+삭제 확인
+
+```sh
+upy ls test
+```
+
+![rm_mpy_ls_ex](res/put_ls_test.png)
+
 </details>
 
 ### format
@@ -539,7 +624,7 @@ upy reset
 <details>
 <summary>사용 예시</summary>
 
-**main.py 파일 생성 및 아래 내용 기재**
+사용자 환경에서 'blink.py' 파일 생성 및 아래 내용 기재
 
 ```py
 import machine
@@ -550,6 +635,16 @@ while True:
     led.toggle()
     time.sleep_ms(1000)
 ```
+
+![blink_code](res/blink_code.png)
+
+[put](#put) 명령어를 사용하여 'main.py' 이름으로 보드 저장소에 저장
+
+```sh
+upy put blink.py main.py
+```
+
+![blink_put](res/blink_put.png)
 
 upy reset 후 보드에 장착된 LED가 1초씩 점멸하는 지 확인
 
