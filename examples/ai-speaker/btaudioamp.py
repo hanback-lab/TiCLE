@@ -5,7 +5,7 @@ class BtAudioAmp:
     """
     Bluetooth Audio Amplifier Control
     """
-    SHOT_HOLD = 50
+    SHOT_HOLD = 100
     LONG_HOLD = 1300
     
     def __init__(self, mode, scan, down, up, shot_hold_ms=SHOT_HOLD, long_hold_ms=LONG_HOLD):

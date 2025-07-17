@@ -94,6 +94,10 @@ def parse_command(text):
             option = 'next'
         elif '이전' in text or '앞' in text:
             option = 'prev'
+        elif '일시정지' in text or '정지' in text:
+            option = 'pause'
+        elif '재생' in text or '다시' in text:
+            option = 'resume'
 
     # ===== SPECIAL CASE: 무드등 언급만 =====
     elif '무드등' in text:
