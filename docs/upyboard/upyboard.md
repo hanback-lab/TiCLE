@@ -160,7 +160,7 @@ upy scan
 
 <details>
 <summary>사용 예시</summary>
-
+<br>
 실행 결과
 
 ![scan_ex](res/scan_ex.png)
@@ -184,11 +184,11 @@ upy -s <COM Port> env
 <summary>사용 예시</summary>
 <br>
 
-먼저 `scan` 명령어를 활용해 연결된 포트를 파악합니다. 
+[scan](#scan) 명령어를 활용해 연결된 포트를 파악 
 
 ![scan_ex](res/scan_ex.png)
 
-'COM5' 포트를 사용자 환경에 등록시킵니다.
+'COM5' 포트를 사용자 환경에 등록
 
 ![env_ex](res/env_ex.png)
 </details>
@@ -206,7 +206,7 @@ upy init
 <summary>사용 예시</summary>
 <br>
 
-TiCLE 보드를 공장 초기화합니다.
+TiCLE 보드 공장 초기화 진행
 
 ![init_ex](res/init_ex.png)
 </details>
@@ -217,7 +217,7 @@ TiCLE 보드를 공장 초기화합니다.
 
 같은 사용자 환경에서 보드만 달라질 경우, 연결된 포트 정보가 달라질 수 있습니다. 이에 이 명령어를 사용하여 포트 정보를 변경해 기존과 동일하게 사용할 수 있습니다.
 
-단, `env` 명령어로 사용자 환경이 등록된 경로에서만 명령어가 동작됩니다.
+단, [env](#env) 명령어로 사용자 환경이 등록된 경로에서만 명령어가 동작됩니다.
 
 인자값으로 변경할 포트를 입력합니다. 만약 인자값으로 아무것도 입력하지 않을시, 현재 사용자 환경에 설정된 포트 정보를 출력합니다.
 
@@ -282,7 +282,7 @@ upy run <File name>.py
 print("hello world!")
 ```
 
-![run_file_ex](res/run_file_ex.png)
+<img src="res/run_file_ex.png" width=60%>
 
 다음 명령어로 프로그램 실행 후 결과 확인
 
@@ -311,7 +311,7 @@ upy df
 
 ### ls
 
-> 보드 저장소의 현재 경로에 있는 모든 폴더/파일들을 출력합니다.
+> 보드 저장소의 특정 경로에 있는 모든 폴더/파일들을 출력합니다.
 
 인자값으로 특정 경로를 입력하면 해당 경로의 모든 폴더/파일들을 출력합니다. 입력하지 않는다면 최상위 경로 ('/') 를 출력합니다.
 
@@ -348,7 +348,7 @@ upy ls lib
 
 특정 파일들을 정리 및 분류하는데 용이하게 사용할 수 있습니다.
 
-인자값으로 생성할 폴더의 경로를 기입해주면 됩니다.
+인자값으로 생성할 폴더의 경로를 기입해줍니다.
 
 ```sh
 upy mkdir <path>
@@ -409,7 +409,7 @@ upy put hello_world.py temp.py
 
 ![put_temp_ex](res/put_other_name.png)
 
-`ls` 명령어로 파일 저장 확인
+[ls](#ls) 명령어로 파일 저장 확인
 
 ```sh
 upy ls
@@ -424,7 +424,7 @@ upy put hello_world.py test/hello.py
 ```
 ![put_in_test](res/put_in_test.png)
 
-`ls` 명령어로 파일 저장 확인
+[ls](#ls) 명령어로 파일 저장 확인
 
 ```sh
 upy ls test
@@ -436,7 +436,7 @@ upy ls test
 ### get
 > 파일 내용을 읽고 출력합니다.
 
-보드에 저장된 파일 내용을 읽고 터미널에 출력합니다. 보드 저장소 내에 저장된 파일의 원본이 소실되었거나 다른 작업자와 협업할 때 등 활용할 수 있습니다.
+보드에 저장된 파일 내용을 읽고 터미널에 출력합니다. 보드 저장소 내에 저장된 파일의 원본이 손실되었거나 다른 작업자와 협업할 때 등 활용할 수 있습니다.
 
 인자값을 총 두 개까지 입력할 수 있습니다.
 - 첫 번째 인자 : 보드 저장소에서 불러올 경로
@@ -549,6 +549,11 @@ upy rm <path>
 
 <details>
 <summary>사용 예시</summary>
+<br>
+
+[ls](#ls) 명령어로 현재 저장된 파일들 확인
+
+![rm_ls_prev](res/upload_ls.png)
 
 [put](#put) 예시에서 저장한 'temp.py' 파일 삭제
 
@@ -597,6 +602,7 @@ upy format
 <summary>사용 예시</summary>
 
 실행 결과
+<br>
 
 ![format_ex](res/format_ex.png)
 
