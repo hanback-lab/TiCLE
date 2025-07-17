@@ -623,7 +623,7 @@ upy reset
 
 <details>
 <summary>사용 예시</summary>
-
+<br>
 사용자 환경에서 'blink.py' 파일 생성 및 아래 내용 기재
 
 ```py
@@ -676,7 +676,7 @@ upy repl
 
 <details>
 <summary>사용 예시</summary>
-
+<br>
 repl을 열고 단순 연산값을 출력해봅니다.
 
 ```sh
