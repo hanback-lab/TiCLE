@@ -712,7 +712,9 @@ LED에 불이 점멸하는 것을 확인할 수 있습니다.
 
 > 보드의 저장소 관리를 Shell 형태로 수행합니다.
 
-지금까지 나왔던 저장소 관리 명령어들(ls, get, put 등) 및 자주 사용하는 명령어들을 Shell 환경에서 사용할 수 있습니다. Linux 및 Windows의 명령 프롬프트처럼 CLI 환경에서 파일을 관리하고 repl에 접속할 수 있는 등 명령어 기반 인터페이스를 사용할 수 있습니다.
+보드에 접속하여 특정 기능을 제어할 수 있는 명령어 기반 인터페이스(Command Line Interface) 입니다.  
+Linux의 Shell처럼 입력을 통해 명령어를 수행할 수 있지만, 아래에  정해진 명령어만 사용 할 수 있습니다. 보드 저장소 관리의 효율성을 증진시켜줄 수 있습니다.
+
 
 ```sh
 upy shell
@@ -731,3 +733,26 @@ upy shell
 - [repl](#repl)
 - pwd : 현재 경로 출력
 - help : shell 상에서 사용할 수 있는 명령어 출력
+
+<details>
+<summary>사용 예시</summary>
+<br>
+
+접속 화면
+
+```sh
+upy shell
+```
+
+![shell_ex](res/shell_ex.png)
+
+'test' 폴더 이동 후 현재 경로 출력
+
+```sh
+cd test
+pwd
+```
+
+![shell_cd_pwd](res/shell_ex_cdpwd.png)
+
+</details>
