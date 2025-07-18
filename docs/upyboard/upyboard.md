@@ -301,7 +301,7 @@ upy df
 
 <details>
 <summary>사용 예시</summary>
-
+<br>
 실행 결과
 
 ![df_ex](res/df_ex.png)
@@ -355,6 +355,7 @@ upy mkdir <path>
 
 <details>
 <summary>사용 예시</summary>
+<br>
 실행 결과
 
 ```sh
@@ -599,9 +600,9 @@ upy format
 
 <details>
 <summary>사용 예시</summary>
-
-실행 결과
 <br>
+실행 결과
+
 
 ![format_ex](res/format_ex.png)
 
@@ -694,7 +695,7 @@ upy repl
 
 ![repl_ex](res/repl_ex.png)
 
-REPL에서 Soft Reset을 걸어 `reset` 과정에서 넣었던 `main.py` 프로그램을 실행시켜봅니다.
+REPL에서 Soft Reset을 걸어 [reset](#reset) 과정에서 넣었던 `main.py` 프로그램을 실행시켜봅니다.
 
 ```sh
 >>> <Ctrl+D>
@@ -754,5 +755,13 @@ pwd
 ```
 
 ![shell_cd_pwd](res/shell_ex_cdpwd.png)
+
+[ls](#ls) 명령어로 test 폴더 내에 파일 확인
+
+```sh
+ls
+```
+
+![shell_ls](res/shell_ls_ex.png)
 
 </details>
